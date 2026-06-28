@@ -1,7 +1,7 @@
 import sys
 
 from src.db.config import load_baskets, load_instruments, load_series_registry, load_sources
-from src.db.models import DataClass, Priority
+from src.db.models import DataClass
 
 
 def validate():

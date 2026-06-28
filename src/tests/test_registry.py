@@ -5,7 +5,7 @@ from src.db.models import DataClass
 def test_series_ids_unique():
     series = load_series_registry()
     ids = [s.series_id for s in series]
-    assert len(ids) == len(set(ids)), f"Duplicate series_ids found"
+    assert len(ids) == len(set(ids)), "Duplicate series_ids found"
 
 
 def test_enabled_series_have_source():
