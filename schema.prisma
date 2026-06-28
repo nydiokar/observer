@@ -1,0 +1,216 @@
+generator client {
+  provider             = "prisma-client-py"
+  interface            = "sync"
+  recursive_type_depth = 5
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SeriesRegistry {
+  seriesId         String   @id @map("series_id")
+  displayName      String   @map("display_name")
+  engine           String
+  dataClass        String   @map("data_class")
+  sourceName       String   @map("source_name")
+  sourceSeriesCode String?  @map("source_series_code")
+  frequency        String
+  unit             String
+  accessType       String   @map("access_type")
+  licenseClass     String   @map("license_class")
+  priority         String
+  isDirect         Boolean  @default(true) @map("is_direct")
+  calculationNotes String?  @map("calculation_notes")
+  fallbackSource   String?  @map("fallback_source")
+  refreshPolicy    String   @map("refresh_policy")
+  notes            String?
+  enabled          Boolean  @default(true)
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  observations SeriesObservation[]
+
+  @@map("series_registry")
+}
+
+model Instrument {
+  instrumentId   Int     @id @default(autoincrement()) @map("instrument_id")
+  ticker         String  @unique
+  name           String
+  instrumentType String  @map("instrument_type")
+  engine         String
+  basketName     String? @map("basket_name")
+  enabled        Boolean @default(true)
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  basketMembers  BasketMember[]
+  marketPrices   MarketPrice[]
+  financialFacts FinancialFact[]
+  derivedMetrics DerivedMetric[]
+
+  @@map("instruments")
+}
+
+model Basket {
+  name        String   @id
+  displayName String   @map("display_name")
+  engine      String
+  description String?
+  enabled     Boolean  @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  members BasketMember[]
+
+  @@map("baskets")
+}
+
+model BasketMember {
+  basketName String @map("basket_name")
+  ticker     String
+
+  basket Basket  @relation(fields: [basketName], references: [name])
+  instrument Instrument @relation(fields: [ticker], references: [ticker])
+
+  @@id([basketName, ticker])
+  @@map("basket_members")
+}
+
+model RawPayload {
+  rawPayloadId     Int      @id @default(autoincrement()) @map("raw_payload_id")
+  sourceName       String   @map("source_name")
+  datasetName      String   @map("dataset_name")
+  retrievedAt      DateTime @map("retrieved_at")
+  requestUrlHash   String?  @map("request_url_hash")
+  requestParamsJson Json?   @map("request_params_json")
+  responseFormat   String   @map("response_format")
+  storagePath      String   @map("storage_path")
+  checksum         String?
+  status           String   @default("success")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  observations SeriesObservation[]
+
+  @@map("raw_payloads")
+}
+
+model SeriesObservation {
+  id               BigInt   @id @default(autoincrement())
+  seriesId         String   @map("series_id")
+  observationDate  DateTime @map("observation_date") @db.Date
+  value            Float
+  unit             String
+  sourceName       String   @map("source_name")
+  sourceSeriesCode String?  @map("source_series_code")
+  releaseDate      DateTime? @map("release_date") @db.Date
+  availableAt      DateTime? @map("available_at")
+  vintageDate      DateTime? @map("vintage_date") @db.Date
+  retrievedAt      DateTime @map("retrieved_at")
+  revisionNo       Int?     @map("revision_no")
+  qualityFlag      String   @default("ok") @map("quality_flag")
+  rawPayloadId     Int?     @map("raw_payload_id")
+
+  series    SeriesRegistry @relation(fields: [seriesId], references: [seriesId])
+  rawPayload RawPayload?   @relation(fields: [rawPayloadId], references: [rawPayloadId])
+
+  @@unique([seriesId, observationDate, sourceName, vintageDate])
+  @@index([seriesId, observationDate, retrievedAt])
+  @@map("series_observations")
+}
+
+model MarketPrice {
+  id            BigInt   @id @default(autoincrement())
+  instrumentId  Int      @map("instrument_id")
+  date          DateTime @db.Date
+  open          Float?
+  high          Float?
+  low           Float?
+  close         Float
+  adjustedClose Float?  @map("adjusted_close")
+  volume        BigInt?
+  sourceName    String   @map("source_name")
+  retrievedAt   DateTime @map("retrieved_at")
+  qualityFlag   String   @default("ok") @map("quality_flag")
+
+  instrument Instrument @relation(fields: [instrumentId], references: [instrumentId])
+
+  @@unique([instrumentId, date, sourceName])
+  @@map("market_prices")
+}
+
+model FinancialFact {
+  id              BigInt   @id @default(autoincrement())
+  ticker          String
+  cik             String?
+  periodEnd       DateTime @map("period_end") @db.Date
+  fiscalYear      Int      @map("fiscal_year")
+  fiscalPeriod    String   @map("fiscal_period")
+  factName        String   @map("fact_name")
+  value           Float
+  unit            String
+  sourceName      String   @map("source_name")
+  filingAccession String?  @map("filing_accession")
+  formType        String?  @map("form_type")
+  filedAt         DateTime? @map("filed_at")
+  acceptedAt      DateTime? @map("accepted_at")
+  retrievedAt     DateTime @map("retrieved_at")
+  qualityFlag     String   @default("ok") @map("quality_flag")
+
+  instrument Instrument @relation(fields: [ticker], references: [ticker])
+
+  @@unique([ticker, periodEnd, factName, sourceName])
+  @@map("financial_facts")
+}
+
+model DerivedMetric {
+  metricId           String   @map("metric_id")
+  instrumentId       Int?     @map("instrument_id")
+  seriesId           String?  @map("series_id")
+  date               DateTime @db.Date
+  value              Float?
+  calculationVersion String   @map("calculation_version")
+  inputRefsJson      Json?    @map("input_refs_json")
+  qualityFlag        String   @default("ok") @map("quality_flag")
+  createdAt          DateTime @default(now()) @map("created_at")
+
+  instrument Instrument? @relation(fields: [instrumentId], references: [instrumentId])
+
+  @@unique([metricId, instrumentId, date])
+  @@map("derived_metrics")
+}
+
+model EarningsEvent {
+  id                 BigInt   @id @default(autoincrement())
+  ticker             String
+  fiscalPeriod       String   @map("fiscal_period")
+  earningsDate       DateTime @map("earnings_date") @db.Date
+  reportedEps        Float?   @map("reported_eps")
+  estimatedEps       Float?   @map("estimated_eps")
+  epsSurprise        Float?   @map("eps_surprise")
+  epsSurprisePct     Float?   @map("eps_surprise_pct")
+  reportedRevenue    Float?   @map("reported_revenue")
+  estimatedRevenue   Float?   @map("estimated_revenue")
+  revenueSurprise    Float?   @map("revenue_surprise")
+  revenueSurprisePct Float?   @map("revenue_surprise_pct")
+  sourceName         String   @map("source_name")
+  retrievedAt        DateTime @map("retrieved_at")
+  qualityFlag        String   @default("ok") @map("quality_flag")
+
+  @@unique([ticker, fiscalPeriod, sourceName])
+  @@map("earnings_events")
+}
+
+model IngestionRun {
+  runId          Int       @id @default(autoincrement()) @map("run_id")
+  sourceName     String    @map("source_name")
+  runType        String    @map("run_type")
+  status         String    @default("running")
+  startedAt      DateTime  @default(now()) @map("started_at")
+  finishedAt     DateTime? @map("finished_at")
+  recordsAdded   Int       @default(0) @map("records_added")
+  recordsUpdated Int       @default(0) @map("records_updated")
+  errors         Json?
+  notes          String?
+
+  @@map("ingestion_runs")
+}
