@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import Any
 
 import yaml
 
@@ -8,7 +7,7 @@ from .models import BasketEntry, InstrumentEntry, SeriesEntry, SourceEntry
 CONFIG_DIR = Path(__file__).resolve().parent.parent.parent / "config"
 
 
-def load_yaml(filename: str) -> Any:
+def load_yaml(filename: str):
     path = CONFIG_DIR / filename
     with open(path) as f:
         return yaml.safe_load(f)

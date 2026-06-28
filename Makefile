@@ -1,4 +1,4 @@
-.PHONY: install test backfill refresh dashboard clean lint
+.PHONY: install test lint db clean
 
 install:
 	pip install -e ".[dev]"
@@ -15,8 +15,14 @@ refresh:
 dashboard:
 	@echo "Run: grafana-server or open dashboards/sql/"
 
+db:
+	python -m src.db.migrations.run --migration 001_initial_schema.sql
+
 lint:
 	ruff check src/
+
+db:
+	python -m src.db.migrations.run
 
 clean:
 	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true

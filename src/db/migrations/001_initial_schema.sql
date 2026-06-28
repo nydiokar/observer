@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS raw_payloads (
 );
 
 CREATE TABLE IF NOT EXISTS series_observations (
-    id                BIGSERIAL,
+    id                BIGSERIAL PRIMARY KEY,
     series_id         TEXT NOT NULL REFERENCES series_registry(series_id),
     observation_date  DATE NOT NULL,
     value             DOUBLE PRECISION NOT NULL,
@@ -76,16 +76,15 @@ CREATE TABLE IF NOT EXISTS series_observations (
     raw_payload_id    INTEGER REFERENCES raw_payloads(raw_payload_id)
 );
 
-SELECT create_hypertable('series_observations', 'observation_date', if_not_exists => TRUE);
+CREATE UNIQUE INDEX IF NOT EXISTS uq_obs_vintage
+    ON series_observations (series_id, observation_date, vintage_date, source_name)
+    WHERE vintage_date IS NOT NULL;
 
-CREATE UNIQUE INDEX IF NOT EXISTS uq_series_obs_vintage
-    ON series_observations (series_id, observation_date, COALESCE(vintage_date, '1900-01-01'), source_name);
-
-CREATE UNIQUE INDEX IF NOT EXISTS uq_series_obs_no_vintage
-    ON series_observations (series_id, observation_date, source_name, retrieved_at::date)
+CREATE UNIQUE INDEX IF NOT EXISTS uq_obs_novintage
+    ON series_observations (series_id, observation_date, source_name)
     WHERE vintage_date IS NULL;
 
-CREATE INDEX IF NOT EXISTS idx_series_obs_latest
+CREATE INDEX IF NOT EXISTS idx_obs_latest
     ON series_observations (series_id, observation_date DESC, retrieved_at DESC);
 
 CREATE TABLE IF NOT EXISTS market_prices (
@@ -128,14 +127,13 @@ CREATE TABLE IF NOT EXISTS derived_metrics (
     metric_id          TEXT NOT NULL,
     instrument_id      INTEGER REFERENCES instruments(instrument_id),
     series_id          TEXT REFERENCES series_registry(series_id),
-    basket_name        TEXT REFERENCES baskets(name),
     date               DATE NOT NULL,
     value              DOUBLE PRECISION,
     calculation_version TEXT NOT NULL,
     input_refs_json    JSONB,
     quality_flag       TEXT NOT NULL DEFAULT 'ok',
     created_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    UNIQUE (metric_id, instrument_id, date, COALESCE(basket_name, ''))
+    UNIQUE (metric_id, instrument_id, date)
 );
 
 CREATE TABLE IF NOT EXISTS earnings_events (
