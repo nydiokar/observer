@@ -1,0 +1,142 @@
+instruments:
+  - ticker: SPY
+    name: SPDR S&P 500 ETF Trust
+    instrument_type: ETF
+    engine: valuation
+    enabled: true
+  - ticker: QQQ
+    name: Invesco QQQ Trust
+    instrument_type: ETF
+    engine: valuation
+    enabled: true
+  - ticker: SMH
+    name: VanEck Semiconductor ETF
+    instrument_type: ETF
+    engine: ai_semiconductor
+    enabled: true
+  - ticker: XLK
+    name: Technology Select Sector SPDR Fund
+    instrument_type: ETF
+    engine: valuation
+    enabled: true
+  - ticker: XLV
+    name: Health Care Select Sector SPDR Fund
+    instrument_type: ETF
+    engine: valuation
+    enabled: true
+  - ticker: XLP
+    name: Consumer Staples Select Sector SPDR Fund
+    instrument_type: ETF
+    engine: valuation
+    enabled: true
+  - ticker: XLU
+    name: Utilities Select Sector SPDR Fund
+    instrument_type: ETF
+    engine: valuation
+    enabled: true
+  - ticker: XLF
+    name: Financial Select Sector SPDR Fund
+    instrument_type: ETF
+    engine: valuation
+    enabled: true
+  - ticker: SOXX
+    name: iShares Semiconductor ETF
+    instrument_type: ETF
+    engine: ai_semiconductor
+    enabled: false
+  - ticker: AAPL
+    name: Apple Inc.
+    instrument_type: equity
+    engine: balance_sheet
+    basket_name: big_tech
+    enabled: true
+  - ticker: MSFT
+    name: Microsoft Corporation
+    instrument_type: equity
+    engine: balance_sheet
+    basket_name: big_tech
+    enabled: true
+  - ticker: GOOGL
+    name: Alphabet Inc.
+    instrument_type: equity
+    engine: balance_sheet
+    basket_name: big_tech
+    enabled: true
+  - ticker: AMZN
+    name: Amazon.com Inc.
+    instrument_type: equity
+    engine: valuation
+    basket_name: big_tech
+    enabled: true
+  - ticker: META
+    name: Meta Platforms Inc.
+    instrument_type: equity
+    engine: balance_sheet
+    basket_name: big_tech
+    enabled: true
+  - ticker: NVDA
+    name: NVIDIA Corporation
+    instrument_type: equity
+    engine: ai_semiconductor
+    basket_name: big_tech
+    enabled: true
+  - ticker: TSLA
+    name: Tesla Inc.
+    instrument_type: equity
+    engine: valuation
+    basket_name: big_tech
+    enabled: true
+  - ticker: AMD
+    name: Advanced Micro Devices Inc.
+    instrument_type: equity
+    engine: ai_semiconductor
+    basket_name: semiconductor
+    enabled: true
+  - ticker: AVGO
+    name: Broadcom Inc.
+    instrument_type: equity
+    engine: ai_semiconductor
+    basket_name: semiconductor
+    enabled: true
+  - ticker: MU
+    name: Micron Technology Inc.
+    instrument_type: equity
+    engine: ai_semiconductor
+    basket_name: semiconductor
+    enabled: true
+  - ticker: ASML
+    name: ASML Holding N.V.
+    instrument_type: equity
+    engine: ai_semiconductor
+    basket_name: semiconductor
+    enabled: true
+  - ticker: TSM
+    name: Taiwan Semiconductor Manufacturing Company
+    instrument_type: equity
+    engine: ai_semiconductor
+    basket_name: semiconductor
+    enabled: true
+  - ticker: LRCX
+    name: Lam Research Corporation
+    instrument_type: equity
+    engine: ai_semiconductor
+    basket_name: semiconductor
+    enabled: true
+  - ticker: AMAT
+    name: Applied Materials Inc.
+    instrument_type: equity
+    engine: ai_semiconductor
+    basket_name: semiconductor
+    enabled: true
+  - ticker: INTC
+    name: Intel Corporation
+    instrument_type: equity
+    engine: ai_semiconductor
+    basket_name: semiconductor
+    enabled: true
+  - ticker: TXN
+    name: Texas Instruments Incorporated
+    instrument_type: equity
+    engine: ai_semiconductor
+    basket_name: semiconductor
+    enabled: true

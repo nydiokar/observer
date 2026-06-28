@@ -1,0 +1,31 @@
+baskets:
+  - name: big_tech
+    display_name: Big Tech / Magnificent 7
+    engine: valuation
+    description: Core mega-cap technology companies
+    members:
+      - AAPL
+      - MSFT
+      - GOOGL
+      - AMZN
+      - META
+      - NVDA
+      - TSLA
+    enabled: true
+
+  - name: semiconductor
+    display_name: Semiconductor / AI Infrastructure
+    engine: ai_semiconductor
+    description: Core semiconductor and AI infrastructure companies
+    members:
+      - NVDA
+      - AMD
+      - AVGO
+      - MU
+      - ASML
+      - TSM
+      - LRCX
+      - AMAT
+      - INTC
+      - TXN
+    enabled: true

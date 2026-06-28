@@ -1,0 +1,1019 @@
+series:
+  - series_id: FED_FUNDS_EFFECTIVE
+    display_name: Effective Federal Funds Rate
+    engine: macro_fed
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: DFF
+    frequency: daily
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: free_official
+    license_class: public
+  - series_id: FED_TARGET_UPPER
+    display_name: Fed Target Rate Upper Bound
+    engine: macro_fed
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: DFEDTARU
+    frequency: irregular
+    unit: percent
+    priority: useful
+    enabled: true
+    refresh_policy: daily
+    access_type: free_official
+    license_class: public
+  - series_id: FED_TARGET_LOWER
+    display_name: Fed Target Rate Lower Bound
+    engine: macro_fed
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: DFEDTARL
+    frequency: irregular
+    unit: percent
+    priority: useful
+    enabled: true
+    refresh_policy: daily
+    access_type: free_official
+    license_class: public
+  - series_id: FED_BALANCE_SHEET
+    display_name: Fed Balance Sheet (Total Assets)
+    engine: macro_fed
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: WALCL
+    frequency: weekly
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: weekly
+    access_type: free_official
+    license_class: public
+  - series_id: FED_BALANCE_SHEET_4W_DELTA
+    display_name: Fed Balance Sheet 4-Week Change
+    engine: macro_fed
+    data_class: derived
+    is_direct: false
+    source_name: FRED
+    frequency: weekly
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: weekly
+    access_type: free_official
+    license_class: public
+    calculation_notes: 4-week absolute change of WALCL
+  - series_id: FED_BALANCE_SHEET_13W_DELTA
+    display_name: Fed Balance Sheet 13-Week Change
+    engine: macro_fed
+    data_class: derived
+    is_direct: false
+    source_name: FRED
+    frequency: weekly
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: weekly
+    access_type: free_official
+    license_class: public
+    calculation_notes: 13-week absolute change of WALCL
+  - series_id: QT_PACE
+    display_name: QT Pace (Monthly Fed Balance Sheet Delta)
+    engine: macro_fed
+    data_class: derived
+    is_direct: false
+    source_name: FRED
+    frequency: weekly
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: weekly
+    access_type: free_official
+    license_class: public
+    calculation_notes: Monthly delta of WALCL
+  - series_id: CPI_YOY
+    display_name: CPI Year-over-Year
+    engine: inflation
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: CPIAUCSL
+    frequency: monthly
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+    fallback_source: BLS
+  - series_id: CPI_MOM
+    display_name: CPI Month-over-Month
+    engine: inflation
+    data_class: derived
+    is_direct: false
+    source_name: FRED
+    frequency: monthly
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+    calculation_notes: Month-over-month percent change of CPI
+  - series_id: CORE_CPI_YOY
+    display_name: Core CPI Year-over-Year
+    engine: inflation
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: CPILFESL
+    frequency: monthly
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+    fallback_source: BLS
+  - series_id: CORE_CPI_MOM
+    display_name: Core CPI Month-over-Month
+    engine: inflation
+    data_class: derived
+    is_direct: false
+    source_name: FRED
+    frequency: monthly
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+    calculation_notes: Month-over-month percent change of Core CPI
+  - series_id: CORE_PCE_YOY
+    display_name: Core PCE Year-over-Year
+    engine: inflation
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: PCEPILFE
+    frequency: monthly
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+    fallback_source: BEA
+  - series_id: CORE_PCE_MOM
+    display_name: Core PCE Month-over-Month
+    engine: inflation
+    data_class: derived
+    is_direct: false
+    source_name: FRED
+    frequency: monthly
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+    calculation_notes: Month-over-month percent change of Core PCE
+  - series_id: PPI_FINAL_DEMAND_MOM
+    display_name: PPI Final Demand Month-over-Month
+    engine: inflation
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: WPSFD49207
+    frequency: monthly
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+    fallback_source: BLS
+  - series_id: SHELTER_CPI
+    display_name: Shelter CPI
+    engine: inflation
+    data_class: official_actual
+    source_name: BLS
+    source_series_code: CUSR0000SAH1
+    frequency: monthly
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+    calculation_notes: CPI component; requires BLS API
+  - series_id: SERVICES_LESS_ENERGY_CPI
+    display_name: Services Less Energy Services CPI
+    engine: inflation
+    data_class: official_actual
+    source_name: BLS
+    source_series_code: CUSR0000SASLE
+    frequency: monthly
+    unit: percent
+    priority: useful
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+  - series_id: CPI_YOY_VALUE
+    display_name: CPI Year-over-Year (Level)
+    engine: inflation
+    data_class: official_actual
+    source_name: BLS
+    source_series_code: CUSR0000SA0
+    frequency: monthly
+    unit: index
+    priority: useful
+    enabled: false
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+  - series_id: INFLATION_EXPECTATIONS
+    display_name: University of Michigan Inflation Expectations
+    engine: inflation
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: MICH
+    frequency: monthly
+    unit: percent
+    priority: useful
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+  - series_id: UNEMPLOYMENT_RATE
+    display_name: Unemployment Rate
+    engine: labor
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: UNRATE
+    frequency: monthly
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+    fallback_source: BLS
+  - series_id: INITIAL_CLAIMS
+    display_name: Initial Jobless Claims
+    engine: labor
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: ICSA
+    frequency: weekly
+    unit: count
+    priority: core
+    enabled: true
+    refresh_policy: weekly
+    access_type: free_official
+    license_class: public
+  - series_id: NONFARM_PAYROLLS
+    display_name: Nonfarm Payrolls
+    engine: labor
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: PAYEMS
+    frequency: monthly
+    unit: count
+    priority: core
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+    fallback_source: BLS
+  - series_id: RETAIL_SALES
+    display_name: Retail Sales
+    engine: activity
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: RSXFS
+    frequency: monthly
+    unit: USD
+    priority: useful
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+  - series_id: ISM_MANUFACTURING_PMI
+    display_name: ISM Manufacturing PMI
+    engine: activity
+    data_class: manual
+    source_name: ISM
+    frequency: monthly
+    unit: index
+    priority: core
+    enabled: true
+    refresh_policy: monthly
+    access_type: manual
+    license_class: public
+  - series_id: ISM_SERVICES_PMI
+    display_name: ISM Services PMI
+    engine: activity
+    data_class: manual
+    source_name: ISM
+    frequency: monthly
+    unit: index
+    priority: core
+    enabled: true
+    refresh_policy: monthly
+    access_type: manual
+    license_class: public
+  - series_id: CONSUMER_SENTIMENT
+    display_name: University of Michigan Consumer Sentiment
+    engine: activity
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: UMCSENT
+    frequency: monthly
+    unit: index
+    priority: useful
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+  - series_id: VIX
+    display_name: CBOE Volatility Index (VIX)
+    engine: liquidity_fear
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: VIXCLS
+    frequency: daily
+    unit: index
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: free_official
+    license_class: public
+  - series_id: FINRA_MARGIN_DEBT
+    display_name: FINRA Margin Debt
+    engine: liquidity_fear
+    data_class: official_actual
+    source_name: FINRA
+    frequency: monthly
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+  - series_id: MARGIN_DEBT_MOM_ABS
+    display_name: Margin Debt Month-over-Month Absolute Change
+    engine: liquidity_fear
+    data_class: derived
+    is_direct: false
+    source_name: FINRA
+    frequency: monthly
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+    calculation_notes: Absolute month-over-month change of FINRA margin debt
+  - series_id: MARGIN_DEBT_MOM_PCT
+    display_name: Margin Debt Month-over-Month Percent Change
+    engine: liquidity_fear
+    data_class: derived
+    is_direct: false
+    source_name: FINRA
+    frequency: monthly
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+    calculation_notes: Percent month-over-month change of FINRA margin debt
+  - series_id: HY_SPREAD
+    display_name: High-Yield Bond Spread
+    engine: credit_rates
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: BAMLH0A0HYM2
+    frequency: daily
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: free_official
+    license_class: public
+  - series_id: TEN_YEAR_YIELD
+    display_name: 10-Year Treasury Yield
+    engine: credit_rates
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: DGS10
+    frequency: daily
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: free_official
+    license_class: public
+  - series_id: BROAD_DOLLAR_INDEX
+    display_name: Broad Trade-Weighted Dollar Index
+    engine: credit_rates
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: DTWEXBGS
+    frequency: daily
+    unit: index
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: free_official
+    license_class: public
+  - series_id: WTI_CRUDE
+    display_name: WTI Crude Oil Price
+    engine: commodities
+    data_class: official_actual
+    source_name: FRED
+    source_series_code: DCOILWTICO
+    frequency: daily
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: free_official
+    license_class: public
+    fallback_source: EIA
+  - series_id: CRUDE_INVENTORIES
+    display_name: Weekly Crude Oil Inventories
+    engine: commodities
+    data_class: official_actual
+    source_name: EIA
+    source_series_code: PET.WCRSTUS1.W
+    frequency: weekly
+    unit: barrels
+    priority: useful
+    enabled: true
+    refresh_policy: weekly
+    access_type: free_official
+    license_class: public
+  - series_id: SPY_DRAWDOWN_52W
+    display_name: SPY Drawdown from 52-Week High
+    engine: valuation
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: daily
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: (close - 52w high) / 52w high * 100
+  - series_id: SPY_DRAWDOWN_ATH
+    display_name: SPY Drawdown from All-Time High
+    engine: valuation
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: daily
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: (close - ATH) / ATH * 100
+  - series_id: SPY_DAILY_RETURN
+    display_name: SPY Daily Return
+    engine: valuation
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: daily
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: Daily percent change from adjusted close
+  - series_id: SPY_RETURN_5D
+    display_name: SPY 5-Day Return
+    engine: valuation
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: daily
+    unit: percent
+    priority: useful
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: 5 trading day return
+  - series_id: SPY_RETURN_1M
+    display_name: SPY 1-Month Return
+    engine: valuation
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: daily
+    unit: percent
+    priority: useful
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: 1-month trailing return from adjusted close
+  - series_id: SPY_RETURN_3M
+    display_name: SPY 3-Month Return
+    engine: valuation
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: daily
+    unit: percent
+    priority: useful
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: 3-month trailing return from adjusted close
+  - series_id: SPY_RETURN_6M
+    display_name: SPY 6-Month Return
+    engine: valuation
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: daily
+    unit: percent
+    priority: useful
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: 6-month trailing return from adjusted close
+  - series_id: SPY_RETURN_1Y
+    display_name: SPY 1-Year Return
+    engine: valuation
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: daily
+    unit: percent
+    priority: useful
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: 1-year trailing return from adjusted close
+  - series_id: QQQ_DRAWDOWN_52W
+    display_name: QQQ Drawdown from 52-Week High
+    engine: valuation
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: daily
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: (close - 52w high) / 52w high * 100
+  - series_id: SMH_DRAWDOWN_52W
+    display_name: SMH Drawdown from 52-Week High
+    engine: ai_semiconductor
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: daily
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: (close - 52w high) / 52w high * 100
+  - series_id: SEMI_BASKET_MEDIAN_FWD_PE
+    display_name: Semiconductor Basket Median Forward P/E
+    engine: ai_semiconductor
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: daily
+    unit: ratio
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: Median forward P/E of semi_ai basket
+  - series_id: SEMI_BASKET_MEDIAN_TRAILING_PE
+    display_name: Semiconductor Basket Median Trailing P/E
+    engine: ai_semiconductor
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: daily
+    unit: ratio
+    priority: useful
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: Median trailing P/E of semi_ai basket
+  - series_id: BIG_TECH_MEDIAN_FWD_PE
+    display_name: Big Tech Basket Median Forward P/E
+    engine: valuation
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: daily
+    unit: ratio
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: Median forward P/E of big_tech basket
+  - series_id: BIG_TECH_MEDIAN_TRAILING_PE
+    display_name: Big Tech Basket Median Trailing P/E
+    engine: valuation
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: daily
+    unit: ratio
+    priority: useful
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: Median trailing P/E of big_tech basket
+  - series_id: BIG_TECH_CAPEX
+    display_name: Big Tech Capex (Basket Total)
+    engine: ai_semiconductor
+    data_class: derived
+    is_direct: false
+    source_name: SEC
+    frequency: quarterly
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: quarterly
+    access_type: free_official
+    license_class: public
+    calculation_notes: Sum of capex for big_tech basket members
+  - series_id: BIG_TECH_OCF
+    display_name: Big Tech Operating Cash Flow (Basket Total)
+    engine: balance_sheet
+    data_class: derived
+    is_direct: false
+    source_name: SEC
+    frequency: quarterly
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: quarterly
+    access_type: free_official
+    license_class: public
+    calculation_notes: Sum of operating cash flow for big_tech basket members
+  - series_id: BIG_TECH_FCF
+    display_name: Big Tech Free Cash Flow (Basket Total)
+    engine: balance_sheet
+    data_class: derived
+    is_direct: false
+    source_name: SEC
+    frequency: quarterly
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: quarterly
+    access_type: free_official
+    license_class: public
+    calculation_notes: OCF - Capex for each company, then summed
+  - series_id: BIG_TECH_CAPEX_OCF
+    display_name: Big Tech Capex / OCF Ratio
+    engine: ai_semiconductor
+    data_class: derived
+    is_direct: false
+    source_name: SEC
+    frequency: quarterly
+    unit: ratio
+    priority: core
+    enabled: true
+    refresh_policy: quarterly
+    access_type: free_official
+    license_class: public
+    calculation_notes: Total capex / total OCF
+  - series_id: BIG_TECH_CAPEX_FCF
+    display_name: Big Tech Capex / FCF Ratio
+    engine: ai_semiconductor
+    data_class: derived
+    is_direct: false
+    source_name: SEC
+    frequency: quarterly
+    unit: ratio
+    priority: useful
+    enabled: true
+    refresh_policy: quarterly
+    access_type: free_official
+    license_class: public
+    calculation_notes: Total capex / total FCF
+  - series_id: MARKET_CAP
+    display_name: Market Capitalization
+    engine: valuation
+    data_class: vendor_actual
+    source_name: FMP
+    frequency: daily
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+  - series_id: ENTERPRISE_VALUE
+    display_name: Enterprise Value
+    engine: valuation
+    data_class: vendor_actual
+    source_name: FMP
+    frequency: daily
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+  - series_id: FWD_PE
+    display_name: Forward P/E Ratio
+    engine: valuation
+    data_class: vendor_estimate
+    source_name: FMP
+    frequency: daily
+    unit: ratio
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+  - series_id: TRAILING_PE
+    display_name: Trailing P/E Ratio
+    engine: valuation
+    data_class: vendor_actual
+    source_name: FMP
+    frequency: daily
+    unit: ratio
+    priority: useful
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    fallback_source: SEC
+  - series_id: EV_EBITDA
+    display_name: EV/EBITDA Ratio
+    engine: valuation
+    data_class: vendor_actual
+    source_name: FMP
+    frequency: daily
+    unit: ratio
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+  - series_id: TOTAL_DEBT
+    display_name: Total Debt
+    engine: balance_sheet
+    data_class: official_actual
+    source_name: SEC
+    frequency: quarterly
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: quarterly
+    access_type: free_official
+    license_class: public
+  - series_id: NET_DEBT
+    display_name: Net Debt
+    engine: balance_sheet
+    data_class: derived
+    is_direct: false
+    source_name: SEC
+    frequency: quarterly
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: quarterly
+    access_type: free_official
+    license_class: public
+    calculation_notes: Total debt - cash and equivalents
+  - series_id: CASH_AND_EQUIVALENTS
+    display_name: Cash and Equivalents
+    engine: balance_sheet
+    data_class: official_actual
+    source_name: SEC
+    frequency: quarterly
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: quarterly
+    access_type: free_official
+    license_class: public
+  - series_id: DEBT_EBITDA
+    display_name: Debt / EBITDA
+    engine: balance_sheet
+    data_class: derived
+    is_direct: false
+    source_name: SEC
+    frequency: quarterly
+    unit: ratio
+    priority: core
+    enabled: true
+    refresh_policy: quarterly
+    access_type: free_official
+    license_class: public
+    calculation_notes: Total debt / EBITDA
+  - series_id: EBITDA_INTEREST_COVERAGE
+    display_name: EBITDA / Interest Expense
+    engine: balance_sheet
+    data_class: derived
+    is_direct: false
+    source_name: SEC
+    frequency: quarterly
+    unit: ratio
+    priority: core
+    enabled: true
+    refresh_policy: quarterly
+    access_type: free_official
+    license_class: public
+    calculation_notes: EBITDA / interest expense
+  - series_id: CAPEX_REVENUE
+    display_name: Capex / Revenue
+    engine: ai_semiconductor
+    data_class: derived
+    is_direct: false
+    source_name: SEC
+    frequency: quarterly
+    unit: ratio
+    priority: useful
+    enabled: true
+    refresh_policy: quarterly
+    access_type: free_official
+    license_class: public
+    calculation_notes: Capex / revenue
+  - series_id: SHORT_TERM_DEBT
+    display_name: Short-Term Debt
+    engine: balance_sheet
+    data_class: official_actual
+    source_name: SEC
+    frequency: quarterly
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: quarterly
+    access_type: free_official
+    license_class: public
+  - series_id: LONG_TERM_DEBT
+    display_name: Long-Term Debt
+    engine: balance_sheet
+    data_class: official_actual
+    source_name: SEC
+    frequency: quarterly
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: quarterly
+    access_type: free_official
+    license_class: public
+  - series_id: OPERATING_INCOME
+    display_name: Operating Income
+    engine: balance_sheet
+    data_class: official_actual
+    source_name: SEC
+    frequency: quarterly
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: quarterly
+    access_type: free_official
+    license_class: public
+  - series_id: EBITDA
+    display_name: EBITDA
+    engine: balance_sheet
+    data_class: derived
+    is_direct: false
+    source_name: SEC
+    frequency: quarterly
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: quarterly
+    access_type: free_official
+    license_class: public
+    calculation_notes: Operating income + depreciation & amortization
+  - series_id: D_AND_A
+    display_name: Depreciation and Amortization
+    engine: balance_sheet
+    data_class: official_actual
+    source_name: SEC
+    frequency: quarterly
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: quarterly
+    access_type: free_official
+    license_class: public
+  - series_id: EPS_SURPRISE
+    display_name: EPS Surprise
+    engine: earnings
+    data_class: vendor_actual
+    source_name: FMP
+    priority: core
+    frequency: quarterly
+    unit: USD
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+  - series_id: EPS_SURPRISE_PCT
+    display_name: EPS Surprise Percent
+    engine: earnings
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: quarterly
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: (actual_eps - estimated_eps) / abs(estimated_eps) * 100
+  - series_id: REVENUE_SURPRISE
+    display_name: Revenue Surprise
+    engine: earnings
+    data_class: vendor_estimate
+    source_name: FMP
+    frequency: quarterly
+    unit: USD
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+  - series_id: REVENUE_SURPRISE_PCT
+    display_name: Revenue Surprise Percent
+    engine: earnings
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: quarterly
+    unit: percent
+    priority: core
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: "(actual_revenue - estimated_revenue) / abs(estimated_revenue) * 100"
+  - series_id: POST_EARNINGS_1D_RETURN
+    display_name: Post-Earnings 1-Day Return
+    engine: earnings
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: quarterly
+    unit: percent
+    priority: useful
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: Close price return 1 trading day after earnings date
+  - series_id: POST_EARNINGS_3D_RETURN
+    display_name: Post-Earnings 3-Day Return
+    engine: earnings
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: quarterly
+    unit: percent
+    priority: useful
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: Close price return 3 trading days after earnings date
+  - series_id: POST_EARNINGS_5D_RETURN
+    display_name: Post-Earnings 5-Day Return
+    engine: earnings
+    data_class: derived
+    is_direct: false
+    source_name: FMP
+    frequency: quarterly
+    unit: percent
+    priority: useful
+    enabled: true
+    refresh_policy: daily
+    access_type: freemium
+    license_class: display_restricted
+    calculation_notes: Close price return 5 trading days after earnings date

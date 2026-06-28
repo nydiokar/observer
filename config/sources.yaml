@@ -1,0 +1,134 @@
+sources:
+  - name: FRED
+    display_name: Federal Reserve Economic Data
+    tier: 1
+    access_type: free_official
+    license_class: public
+    base_url: https://api.stlouisfed.org/fred
+    api_key_env: FRED_API_KEY
+    rate_limit: 120
+    rate_limit_window_seconds: 60
+    retry_policy:
+      max_retries: 3
+      backoff_seconds: 5
+    enabled: true
+
+  - name: ALFRED
+    display_name: Archival FRED
+    tier: 1
+    access_type: free_official
+    license_class: public
+    base_url: https://api.stlouisfed.org/alfred
+    api_key_env: FRED_API_KEY
+    rate_limit: 120
+    rate_limit_window_seconds: 60
+    retry_policy:
+      max_retries: 3
+      backoff_seconds: 5
+    enabled: true
+
+  - name: BLS
+    display_name: Bureau of Labor Statistics
+    tier: 1
+    access_type: free_official
+    license_class: public
+    base_url: https://api.bls.gov/publicAPI/v2
+    api_key_env: BLS_API_KEY
+    rate_limit: 25
+    rate_limit_window_seconds: 60
+    retry_policy:
+      max_retries: 3
+      backoff_seconds: 5
+    enabled: true
+
+  - name: BEA
+    display_name: Bureau of Economic Analysis
+    tier: 1
+    access_type: free_official
+    license_class: public
+    base_url: https://apps.bea.gov/api/data
+    api_key_env: BEA_API_KEY
+    rate_limit: 100
+    rate_limit_window_seconds: 60
+    retry_policy:
+      max_retries: 3
+      backoff_seconds: 10
+    enabled: true
+
+  - name: EIA
+    display_name: Energy Information Administration
+    tier: 1
+    access_type: free_official
+    license_class: public
+    base_url: https://api.eia.gov/v2
+    api_key_env: EIA_API_KEY
+    rate_limit: 100
+    rate_limit_window_seconds: 60
+    retry_policy:
+      max_retries: 3
+      backoff_seconds: 5
+    enabled: true
+
+  - name: SEC
+    display_name: SEC EDGAR
+    tier: 1
+    access_type: free_official
+    license_class: public
+    base_url: https://www.sec.gov
+    api_key_env: SEC_USER_AGENT
+    rate_limit: 10
+    rate_limit_window_seconds: 1
+    retry_policy:
+      max_retries: 3
+      backoff_seconds: 2
+    headers:
+      User-Agent: "${SEC_USER_AGENT}"
+    enabled: true
+
+  - name: FINRA
+    display_name: FINRA
+    tier: 1
+    access_type: free_official
+    license_class: public
+    base_url: https://www.finra.org
+    rate_limit: 10
+    rate_limit_window_seconds: 60
+    retry_policy:
+      max_retries: 2
+      backoff_seconds: 5
+    enabled: true
+
+  - name: ISM
+    display_name: Institute for Supply Management
+    tier: 1
+    access_type: manual
+    license_class: public
+    enabled: true
+
+  - name: FMP
+    display_name: Financial Modeling Prep
+    tier: 2
+    access_type: freemium
+    license_class: display_restricted
+    base_url: https://financialmodelingprep.com/api/v3
+    api_key_env: FMP_API_KEY
+    rate_limit: 300
+    rate_limit_window_seconds: 60
+    retry_policy:
+      max_retries: 2
+      backoff_seconds: 2
+    enabled: true
+
+  - name: Alpha_Vantage
+    display_name: Alpha Vantage
+    tier: 2
+    access_type: freemium
+    license_class: display_restricted
+    base_url: https://www.alphavantage.co/query
+    api_key_env: ALPHA_VANTAGE_API_KEY
+    rate_limit: 5
+    rate_limit_window_seconds: 60
+    retry_policy:
+      max_retries: 2
+      backoff_seconds: 5
+    enabled: false
