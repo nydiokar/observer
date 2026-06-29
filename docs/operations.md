@@ -29,6 +29,8 @@ make db-setup
 
 On 2026-06-29, `make backfill` completed against PostgreSQL with `FRED_API_KEY` set. It loaded 18 Stage 3 FRED backbone series, 66,184 `series_observations` rows, and 36 `raw_payloads` metadata rows.
 
+Use `python -m src.ingest.verify_stage3 --strict-freshness` after backfill or refresh to fail on missing or stale latest observations.
+
 ## Not implemented yet
 
 Dashboards are not implemented yet. Stage 3 live FRED/ALFRED ingestion requires `FRED_API_KEY`.

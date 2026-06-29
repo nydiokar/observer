@@ -4,9 +4,9 @@ from src.db.models import Frequency
 
 
 MAX_AGE_BY_FREQUENCY = {
-    Frequency.daily: timedelta(days=5),
-    Frequency.weekly: timedelta(days=14),
-    Frequency.monthly: timedelta(days=45),
+    Frequency.daily: timedelta(days=14),
+    Frequency.weekly: timedelta(days=21),
+    Frequency.monthly: timedelta(days=75),
     Frequency.quarterly: timedelta(days=110),
     Frequency.annual: timedelta(days=400),
     Frequency.irregular: timedelta(days=45),

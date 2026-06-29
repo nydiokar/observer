@@ -36,7 +36,7 @@ def test_latest_status_for_series_marks_missing():
 def test_latest_status_for_series_marks_stale_daily_row():
     status = latest_status_for_series(
         series=_series(),
-        latest_observation_date=date(2026, 6, 20),
+        latest_observation_date=date(2026, 6, 10),
         as_of_date=date(2026, 6, 29),
     )
 
