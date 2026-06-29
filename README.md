@@ -43,6 +43,9 @@ make db
 
 # Sync YAML registry, instruments, and baskets into PostgreSQL
 make sync-registry
+
+# Backfill Stage 3 FRED macro backbone series once FRED_API_KEY is configured
+make backfill
 ```
 
 ### Project structure

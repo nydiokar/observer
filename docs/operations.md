@@ -19,12 +19,14 @@ make db-setup
 | `make stage2-check` | Validate registry and run tests for the Stage 0-2 foundation |
 | `make db` | Apply PostgreSQL migrations |
 | `make sync-registry` | Upsert YAML registry, instruments, and baskets into PostgreSQL |
+| `make backfill` | Backfill enabled Stage 3 FRED macro backbone series |
+| `make refresh` | Refresh enabled Stage 3 FRED macro backbone series |
 | `pytest` | Run all tests |
 | `python -m src.db.migrations.run` | Apply migrations |
 
 ## Not implemented yet
 
-Stage 3 ingestion entrypoints are intentionally placeholders until FRED/ALFRED connectors, normalization, raw archive usage, and freshness checks are implemented.
+ALFRED vintage ingestion and dashboards are not implemented yet.
 
 ## Recovery
 

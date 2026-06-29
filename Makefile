@@ -23,12 +23,10 @@ validate-registry:
 stage2-check: validate-registry test
 
 backfill:
-	@echo "Stage 3 ingestion is not implemented yet. Complete FRED/ALFRED connectors first."
-	@exit 2
+	$(PYTHON) -m src.ingest.run_backfill
 
 refresh:
-	@echo "Stage 3 ingestion is not implemented yet. Complete FRED/ALFRED connectors first."
-	@exit 2
+	$(PYTHON) -m src.ingest.run_refresh
 
 dashboard:
 	@echo "Dashboards are not implemented yet. Build after normalized observations exist."
