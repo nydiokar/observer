@@ -2,9 +2,6 @@ from datetime import date, datetime, timezone
 from typing import Any
 
 from src.db.models import SeriesEntry
-from src.transforms.quality_flags import staleness_flag
-
-
 def parse_fred_date(value: str | None) -> date | None:
     if not value:
         return None
@@ -29,6 +26,7 @@ def normalize_fred_observations(
     include_vintage: bool = False,
     as_of: date | None = None,
 ) -> list[dict[str, Any]]:
+    del as_of  # Staleness is evaluated for latest-observation checks, not every historical row.
     retrieved_at = retrieved_at or datetime.now(timezone.utc)
     rows: list[dict[str, Any]] = []
 
@@ -50,11 +48,7 @@ def normalize_fred_observations(
                 "vintage_date": vintage_date,
                 "retrieved_at": retrieved_at,
                 "retrieved_on": retrieved_at.date(),
-                "quality_flag": staleness_flag(
-                    observation_date=observation_date,
-                    frequency=series.frequency,
-                    as_of=as_of,
-                ),
+                "quality_flag": "ok",
                 "raw_payload_id": raw_payload_id,
             }
         )

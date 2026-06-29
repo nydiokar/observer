@@ -103,6 +103,7 @@ def test_normalize_fred_observations_skips_missing_and_sets_vintage():
     assert rows[0]["value"] == 4.33
     assert rows[0]["vintage_date"] == date(2026, 6, 29)
     assert rows[0]["retrieved_on"] == date(2026, 6, 29)
+    assert rows[0]["quality_flag"] == "ok"
     assert rows[0]["raw_payload_id"] == "raw-1"
 
 

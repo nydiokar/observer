@@ -18,6 +18,8 @@ from src.db.orm import (
     SeriesRegistry,
 )
 
+MAX_OBSERVATION_UPSERT_ROWS = 1_000
+
 
 def _model_dump_json(entry: Any) -> dict[str, Any]:
     if isinstance(entry, BaseModel):
@@ -123,20 +125,24 @@ def _upsert_observation_batch(
     if not rows:
         return 0
     table = SeriesObservation.__table__
-    statement = insert(table).values(rows)
-    update_columns = {
-        column.name: getattr(statement.excluded, column.name)
-        for column in table.columns
-        if column.name not in {"id", *index_elements}
-    }
-    session.execute(
-        statement.on_conflict_do_update(
-            index_elements=[getattr(table.c, key) for key in index_elements],
-            index_where=index_where,
-            set_=update_columns,
+    count = 0
+    for offset in range(0, len(rows), MAX_OBSERVATION_UPSERT_ROWS):
+        batch = rows[offset:offset + MAX_OBSERVATION_UPSERT_ROWS]
+        statement = insert(table).values(batch)
+        update_columns = {
+            column.name: getattr(statement.excluded, column.name)
+            for column in table.columns
+            if column.name not in {"id", *index_elements}
+        }
+        session.execute(
+            statement.on_conflict_do_update(
+                index_elements=[getattr(table.c, key) for key in index_elements],
+                index_where=index_where,
+                set_=update_columns,
+            )
         )
-    )
-    return len(rows)
+        count += len(batch)
+    return count
 
 
 def upsert_series_observations(

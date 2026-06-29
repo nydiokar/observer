@@ -2,7 +2,7 @@ from datetime import date, datetime, timezone
 
 from sqlalchemy.dialects import postgresql
 
-from src.db.upsert import upsert_series_observations, upsert_series_registry
+from src.db.upsert import MAX_OBSERVATION_UPSERT_ROWS, upsert_series_observations, upsert_series_registry
 
 
 class FakeSession:
@@ -90,3 +90,26 @@ def test_series_observation_upsert_uses_vintage_conflict_target():
     sql = _compile(session.statements[0])
     assert "ON CONFLICT (series_id, observation_date, vintage_date, source_name)" in sql
     assert "WHERE vintage_date IS NOT NULL" in sql
+
+
+def test_series_observation_upsert_batches_large_payloads():
+    session = FakeSession()
+    retrieved_at = datetime(2026, 6, 29, 13, 0, tzinfo=timezone.utc)
+    rows = [
+        {
+            "series_id": "FED_FUNDS_EFFECTIVE",
+            "observation_date": date(2026, 1, 1),
+            "value": index,
+            "unit": "percent",
+            "source_name": "FRED",
+            "source_series_code": "DFF",
+            "retrieved_at": retrieved_at,
+            "quality_flag": "ok",
+        }
+        for index in range(MAX_OBSERVATION_UPSERT_ROWS + 1)
+    ]
+
+    count = upsert_series_observations(session, rows, require_registered=False)
+
+    assert count == MAX_OBSERVATION_UPSERT_ROWS + 1
+    assert len(session.statements) == 2
