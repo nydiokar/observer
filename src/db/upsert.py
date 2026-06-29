@@ -18,7 +18,8 @@ from src.db.orm import (
     SeriesRegistry,
 )
 
-MAX_OBSERVATION_UPSERT_ROWS = 1_000
+MAX_POSTGRES_BIND_PARAMETERS = 65_535
+OBSERVATION_UPSERT_PARAMETER_BUDGET = 50_000
 
 
 def _model_dump_json(entry: Any) -> dict[str, Any]:
@@ -126,8 +127,14 @@ def _upsert_observation_batch(
         return 0
     table = SeriesObservation.__table__
     count = 0
-    for offset in range(0, len(rows), MAX_OBSERVATION_UPSERT_ROWS):
-        batch = rows[offset:offset + MAX_OBSERVATION_UPSERT_ROWS]
+    columns_per_row = max(len(rows[0]), 1)
+    batch_size = max(1, min(
+        len(rows),
+        OBSERVATION_UPSERT_PARAMETER_BUDGET // columns_per_row,
+        MAX_POSTGRES_BIND_PARAMETERS // columns_per_row,
+    ))
+    for offset in range(0, len(rows), batch_size):
+        batch = rows[offset:offset + batch_size]
         statement = insert(table).values(batch)
         update_columns = {
             column.name: getattr(statement.excluded, column.name)

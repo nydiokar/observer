@@ -21,8 +21,13 @@ make db-setup
 | `make sync-registry` | Upsert YAML registry, instruments, and baskets into PostgreSQL |
 | `make backfill` | Backfill enabled Stage 3 FRED macro backbone series |
 | `make refresh` | Refresh enabled Stage 3 FRED macro backbone series |
+| `make verify-stage3` | Verify Stage 3 FRED series have latest rows and report freshness |
 | `pytest` | Run all tests |
 | `python -m src.db.migrations.run` | Apply migrations |
+
+## Stage 3 FRED verification
+
+On 2026-06-29, `make backfill` completed against PostgreSQL with `FRED_API_KEY` set. It loaded 18 Stage 3 FRED backbone series, 66,184 `series_observations` rows, and 36 `raw_payloads` metadata rows.
 
 ## Not implemented yet
 

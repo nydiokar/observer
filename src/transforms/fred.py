@@ -2,6 +2,7 @@ from datetime import date, datetime, timezone
 from typing import Any
 
 from src.db.models import SeriesEntry
+
 def parse_fred_date(value: str | None) -> date | None:
     if not value:
         return None
@@ -26,7 +27,7 @@ def normalize_fred_observations(
     include_vintage: bool = False,
     as_of: date | None = None,
 ) -> list[dict[str, Any]]:
-    del as_of  # Staleness is evaluated for latest-observation checks, not every historical row.
+    del as_of  # Staleness is evaluated for latest-observation health checks, not every historical row.
     retrieved_at = retrieved_at or datetime.now(timezone.utc)
     rows: list[dict[str, Any]] = []
 
