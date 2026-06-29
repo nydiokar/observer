@@ -23,6 +23,8 @@ make db-setup
 | `make refresh` | Refresh enabled Stage 3 FRED macro backbone series |
 | `make verify-stage3` | Verify Stage 3 FRED series have latest rows and report freshness |
 | `make bls-backfill` | Backfill enabled Stage 4 BLS CPI component series |
+| `make bea-backfill` | Backfill enabled Stage 4 BEA NIPA series |
+| `make eia-backfill` | Backfill enabled Stage 4 EIA energy series |
 | `pytest` | Run all tests |
 | `python -m src.db.migrations.run` | Apply migrations |
 
@@ -36,9 +38,15 @@ Use `python -m src.ingest.verify_stage3 --strict-freshness` after backfill or re
 
 On 2026-06-29, `make bls-backfill` completed against PostgreSQL with `BLS_API_KEY` set. It loaded Shelter CPI and Services Less Energy Services CPI component rows through 2026-05-01.
 
+## Stage 4 BEA/EIA verification
+
+On 2026-06-29, `make bea-backfill` completed against PostgreSQL with `BEA_API_KEY` set. It loaded PCE Price Index and Core PCE Price Index rows from live metadata-verified NIPA table `T20804` lines 1 and 25 through 2026-05-01.
+
+On 2026-06-29, `make eia-backfill` completed against PostgreSQL with `EIA_API_KEY` set. It loaded weekly crude inventories from `PET.WCRSTUS1.W` through 2026-06-19. EIA reports this series in `MBBL`, stored as `thousand_barrels`.
+
 ## Not implemented yet
 
-Dashboards are not implemented yet. ALFRED vintage backfill requires `FRED_API_KEY`; BEA and EIA direct ingestion are not implemented yet.
+Dashboards are not implemented yet. ALFRED vintage backfill requires `FRED_API_KEY`.
 
 ## Recovery
 

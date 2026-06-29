@@ -163,6 +163,34 @@ series:
     access_type: free_official
     license_class: public
     fallback_source: BEA
+  - series_id: PCE_PRICE_INDEX_BEA
+    display_name: PCE Price Index (BEA)
+    engine: inflation
+    data_class: official_actual
+    source_name: BEA
+    source_series_code: NIPA:T20804:1
+    frequency: monthly
+    unit: index
+    priority: useful
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+    notes: "Live BEA metadata verified: NIPA table T20804, line 1, Personal consumption expenditures (PCE)."
+  - series_id: CORE_PCE_PRICE_INDEX_BEA
+    display_name: Core PCE Price Index (BEA)
+    engine: inflation
+    data_class: official_actual
+    source_name: BEA
+    source_series_code: NIPA:T20804:25
+    frequency: monthly
+    unit: index
+    priority: useful
+    enabled: true
+    refresh_policy: monthly
+    access_type: free_official
+    license_class: public
+    notes: "Live BEA metadata verified: NIPA table T20804, line 25, PCE excluding food and energy."
   - series_id: CORE_PCE_MOM
     display_name: Core PCE Month-over-Month
     engine: inflation
@@ -448,7 +476,7 @@ series:
     source_name: EIA
     source_series_code: PET.WCRSTUS1.W
     frequency: weekly
-    unit: barrels
+    unit: thousand_barrels
     priority: useful
     enabled: true
     refresh_policy: weekly

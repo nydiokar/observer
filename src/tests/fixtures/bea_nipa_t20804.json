@@ -1,0 +1,28 @@
+{
+  "BEAAPI": {
+    "Results": {
+      "Data": [
+        {
+          "TableName": "T20804",
+          "LineNumber": "1",
+          "LineDescription": "Personal consumption expenditures (PCE)",
+          "SeriesCode": "DPCERG",
+          "TimePeriod": "2026M05",
+          "DataValue": "131.527",
+          "UNIT_MULT": "0",
+          "CL_UNIT": "Level"
+        },
+        {
+          "TableName": "T20804",
+          "LineNumber": "25",
+          "LineDescription": "PCE excluding food and energy",
+          "SeriesCode": "DPCCRG",
+          "TimePeriod": "2026M05",
+          "DataValue": "128.173",
+          "UNIT_MULT": "0",
+          "CL_UNIT": "Level"
+        }
+      ]
+    }
+  }
+}

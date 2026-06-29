@@ -1,0 +1,23 @@
+{
+  "response": {
+    "total": 2,
+    "dateFormat": "YYYY-MM-DD",
+    "frequency": "weekly",
+    "data": [
+      {
+        "period": "2026-06-19",
+        "series": "WCRSTUS1",
+        "series-description": "U.S. Ending Stocks of Crude Oil (Thousand Barrels)",
+        "value": 743325,
+        "units": "MBBL"
+      },
+      {
+        "period": "2026-06-12",
+        "series": "WCRSTUS1",
+        "series-description": "U.S. Ending Stocks of Crude Oil (Thousand Barrels)",
+        "value": 758473,
+        "units": "MBBL"
+      }
+    ]
+  }
+}
