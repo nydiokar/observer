@@ -8,13 +8,13 @@ def test_sanitize_request_metadata_redacts_secret_like_keys():
     metadata = {
         "series_id": "DFF",
         "api_key": "secret",
-        "nested": {"Authorization": "Bearer token", "other": "visible"},
+        "nested": {"Authorization": "Bearer token", "UserID": "bea-secret", "other": "visible"},
     }
 
     assert sanitize_request_metadata(metadata) == {
         "series_id": "DFF",
         "api_key": "<redacted>",
-        "nested": {"Authorization": "<redacted>", "other": "visible"},
+        "nested": {"Authorization": "<redacted>", "UserID": "<redacted>", "other": "visible"},
     }
 
 

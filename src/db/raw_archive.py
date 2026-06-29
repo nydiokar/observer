@@ -11,7 +11,10 @@ from sqlalchemy.orm import Session
 
 from src.db.upsert import insert_raw_payload
 
-SECRET_KEY_RE = re.compile("(api[_-]?key|token|secret|password|authorization|auth)", re.IGNORECASE)
+SECRET_KEY_RE = re.compile(
+    "(api[_-]?key|token|secret|password|authorization|auth|user[_-]?id|userid)",
+    re.IGNORECASE,
+)
 
 
 @dataclass(frozen=True)
