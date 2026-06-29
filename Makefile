@@ -1,7 +1,7 @@
 PYTHON ?= .venv/bin/python
 PIP ?= .venv/bin/pip
 
-.PHONY: install test lint validate-registry db sync-registry db-setup stage2-check backfill refresh verify-stage3 dashboard clean
+.PHONY: install test lint validate-registry db sync-registry db-setup stage2-check backfill refresh verify-stage3 bls-backfill dashboard clean
 
 install:
 	$(PIP) install -e ".[dev]"
@@ -30,6 +30,9 @@ refresh:
 
 verify-stage3:
 	$(PYTHON) -m src.ingest.verify_stage3
+
+bls-backfill:
+	$(PYTHON) -m src.ingest.run_bls_backfill
 
 dashboard:
 	@echo "Dashboards are not implemented yet. Build after normalized observations exist."

@@ -22,6 +22,7 @@ make db-setup
 | `make backfill` | Backfill enabled Stage 3 FRED macro backbone series |
 | `make refresh` | Refresh enabled Stage 3 FRED macro backbone series |
 | `make verify-stage3` | Verify Stage 3 FRED series have latest rows and report freshness |
+| `make bls-backfill` | Backfill enabled Stage 4 BLS CPI component series |
 | `pytest` | Run all tests |
 | `python -m src.db.migrations.run` | Apply migrations |
 
@@ -31,9 +32,13 @@ On 2026-06-29, `make backfill` completed against PostgreSQL with `FRED_API_KEY` 
 
 Use `python -m src.ingest.verify_stage3 --strict-freshness` after backfill or refresh to fail on missing or stale latest observations.
 
+## Stage 4 BLS verification
+
+On 2026-06-29, `make bls-backfill` completed against PostgreSQL with `BLS_API_KEY` set. It loaded Shelter CPI and Services Less Energy Services CPI component rows through 2026-05-01.
+
 ## Not implemented yet
 
-Dashboards are not implemented yet. Stage 3 live FRED/ALFRED ingestion requires `FRED_API_KEY`.
+Dashboards are not implemented yet. ALFRED vintage backfill requires `FRED_API_KEY`; BEA and EIA direct ingestion are not implemented yet.
 
 ## Recovery
 

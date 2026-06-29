@@ -198,7 +198,7 @@ series:
     source_name: BLS
     source_series_code: CUSR0000SAH1
     frequency: monthly
-    unit: percent
+    unit: index
     priority: core
     enabled: true
     refresh_policy: monthly
@@ -212,7 +212,7 @@ series:
     source_name: BLS
     source_series_code: CUSR0000SASLE
     frequency: monthly
-    unit: percent
+    unit: index
     priority: useful
     enabled: true
     refresh_policy: monthly
