@@ -1,31 +1,59 @@
 import argparse
-import os
 from pathlib import Path
 
 import dotenv
 
+from src.db.session import make_engine
+
 MIGRATIONS_DIR = Path(__file__).resolve().parent
 
 
+def split_sql_statements(sql: str) -> list[str]:
+    statements: list[str] = []
+    current: list[str] = []
+    in_single_quote = False
+    dollar_quote = False
+    i = 0
+    while i < len(sql):
+        char = sql[i]
+        next_two = sql[i : i + 2]
+
+        if not in_single_quote and next_two == "$$":
+            dollar_quote = not dollar_quote
+            current.append(next_two)
+            i += 2
+            continue
+
+        if not dollar_quote and char == "'":
+            in_single_quote = not in_single_quote
+            current.append(char)
+            i += 1
+            continue
+
+        if char == ";" and not in_single_quote and not dollar_quote:
+            statement = "".join(current).strip()
+            if statement:
+                statements.append(statement)
+            current = []
+            i += 1
+            continue
+
+        current.append(char)
+        i += 1
+
+    statement = "".join(current).strip()
+    if statement:
+        statements.append(statement)
+    return statements
+
+
 def run_migration(sql_file: str, dsn: str | None = None) -> None:
-    if dsn is None:
-        dsn = os.environ.get("DATABASE_URL")
-    if dsn is None:
-        msg = "DATABASE_URL not set; provide --dsn or set the environment variable"
-        raise RuntimeError(msg)
-
-    import psycopg2
-
-    conn = psycopg2.connect(dsn)
-    conn.autocommit = True
-    cur = conn.cursor()
-
     path = MIGRATIONS_DIR / sql_file
     sql = path.read_text()
-
-    cur.execute(sql)
-    cur.close()
-    conn.close()
+    engine = make_engine(dsn, isolation_level="AUTOCOMMIT")
+    with engine.connect() as connection:
+        for statement in split_sql_statements(sql):
+            connection.exec_driver_sql(statement)
     print(f"Migration {sql_file} applied successfully.")
 
 

@@ -29,23 +29,20 @@ cp .env.example .env
 
 # Set up database
 createdb marketintel
-python -m src.db.migrations.run
+make db-setup
 ```
 
-### Quick start
+### Stage 0-2 verification
 
 ```bash
-# Backfill all enabled sources
-make backfill
+# Validate registry and run the Stage 0-2 test suite
+make stage2-check
 
-# Refresh latest data
-make refresh
+# Apply schema only
+make db
 
-# Run tests
-make test
-
-# Launch dashboards
-make dashboard
+# Sync YAML registry, instruments, and baskets into PostgreSQL
+make sync-registry
 ```
 
 ### Project structure
@@ -70,8 +67,10 @@ docs/                # Source coverage, operations runbook, metric dictionary
 
 ## Documentation
 
-- [Source Coverage](SOURCE_COVERAGE.md)
-- [Known Limitations](KNOWN_LIMITATIONS.md)
+- [Specification](docs/spec/macro_financial_market_intelligence_spec_v2.md)
+- [Autonomous Build Roadmap](docs/spec/autonomous_build_roadmap_and_agent_handoff.md)
+- [Source Coverage](docs/source_coverage.md)
+- [Known Limitations](docs/known_limitations.md)
 - [docs/operations.md](docs/operations.md)
 - [docs/metric_dictionary.md](docs/metric_dictionary.md)
 

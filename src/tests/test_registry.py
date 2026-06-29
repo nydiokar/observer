@@ -1,5 +1,8 @@
+import pytest
+from pydantic import ValidationError
+
 from src.db.config import load_baskets, load_instruments, load_series_registry, load_sources
-from src.db.models import DataClass
+from src.db.models import DataClass, SeriesEntry
 
 
 def test_series_ids_unique():
@@ -66,3 +69,23 @@ def test_basket_members_exist():
 def test_sources_not_empty():
     sources = load_sources()
     assert len(sources) > 0, "No sources loaded"
+
+
+def test_series_entry_rejects_unknown_fields():
+    with pytest.raises(ValidationError, match="typoed_field"):
+        SeriesEntry(
+            series_id="TEST",
+            display_name="Test",
+            engine="macro_fed",
+            data_class="official_actual",
+            source_name="FRED",
+            source_series_code="TEST",
+            frequency="daily",
+            unit="percent",
+            access_type="free_official",
+            license_class="public",
+            priority="core",
+            refresh_policy="daily",
+            enabled=True,
+            typoed_field="should fail",
+        )

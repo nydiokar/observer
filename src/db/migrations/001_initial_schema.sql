@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS basket_members (
 );
 
 CREATE TABLE IF NOT EXISTS raw_payloads (
-    raw_payload_id    SERIAL PRIMARY KEY,
+    raw_payload_id    TEXT PRIMARY KEY,
     source_name       TEXT NOT NULL,
     dataset_name      TEXT NOT NULL,
     retrieved_at      TIMESTAMPTZ NOT NULL,
@@ -58,6 +58,10 @@ CREATE TABLE IF NOT EXISTS raw_payloads (
     status            TEXT NOT NULL DEFAULT 'success',
     created_at        TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+ALTER TABLE IF EXISTS series_observations DROP CONSTRAINT IF EXISTS series_observations_raw_payload_id_fkey;
+ALTER TABLE raw_payloads ALTER COLUMN raw_payload_id DROP DEFAULT;
+ALTER TABLE raw_payloads ALTER COLUMN raw_payload_id TYPE TEXT USING raw_payload_id::TEXT;
 
 CREATE TABLE IF NOT EXISTS series_observations (
     id                BIGSERIAL PRIMARY KEY,
@@ -71,17 +75,31 @@ CREATE TABLE IF NOT EXISTS series_observations (
     available_at      TIMESTAMPTZ,
     vintage_date      DATE,
     retrieved_at      TIMESTAMPTZ NOT NULL,
+    retrieved_on      DATE NOT NULL,
     revision_no       INTEGER,
     quality_flag      TEXT NOT NULL DEFAULT 'ok',
-    raw_payload_id    INTEGER REFERENCES raw_payloads(raw_payload_id)
+    raw_payload_id    TEXT REFERENCES raw_payloads(raw_payload_id)
 );
+
+ALTER TABLE series_observations DROP CONSTRAINT IF EXISTS series_observations_raw_payload_id_fkey;
+ALTER TABLE series_observations ADD COLUMN IF NOT EXISTS retrieved_on DATE;
+UPDATE series_observations
+SET retrieved_on = COALESCE(retrieved_on, retrieved_at::DATE)
+WHERE retrieved_on IS NULL;
+ALTER TABLE series_observations ALTER COLUMN retrieved_on SET DEFAULT CURRENT_DATE;
+ALTER TABLE series_observations ALTER COLUMN retrieved_on SET NOT NULL;
+ALTER TABLE series_observations ALTER COLUMN raw_payload_id TYPE TEXT USING raw_payload_id::TEXT;
+ALTER TABLE series_observations
+    ADD CONSTRAINT series_observations_raw_payload_id_fkey
+    FOREIGN KEY (raw_payload_id) REFERENCES raw_payloads(raw_payload_id);
 
 CREATE UNIQUE INDEX IF NOT EXISTS uq_obs_vintage
     ON series_observations (series_id, observation_date, vintage_date, source_name)
     WHERE vintage_date IS NOT NULL;
 
+DROP INDEX IF EXISTS uq_obs_novintage;
 CREATE UNIQUE INDEX IF NOT EXISTS uq_obs_novintage
-    ON series_observations (series_id, observation_date, source_name)
+    ON series_observations (series_id, observation_date, source_name, retrieved_on)
     WHERE vintage_date IS NULL;
 
 CREATE INDEX IF NOT EXISTS idx_obs_latest
@@ -124,17 +142,50 @@ CREATE TABLE IF NOT EXISTS financial_facts (
 );
 
 CREATE TABLE IF NOT EXISTS derived_metrics (
+    id                 BIGSERIAL PRIMARY KEY,
     metric_id          TEXT NOT NULL,
     instrument_id      INTEGER REFERENCES instruments(instrument_id),
     series_id          TEXT REFERENCES series_registry(series_id),
+    basket_name        TEXT REFERENCES baskets(name),
     date               DATE NOT NULL,
     value              DOUBLE PRECISION,
     calculation_version TEXT NOT NULL,
     input_refs_json    JSONB,
     quality_flag       TEXT NOT NULL DEFAULT 'ok',
     created_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    UNIQUE (metric_id, instrument_id, date)
+    CHECK (
+        instrument_id IS NOT NULL
+        OR series_id IS NOT NULL
+        OR basket_name IS NOT NULL
+    )
 );
+
+ALTER TABLE derived_metrics ADD COLUMN IF NOT EXISTS basket_name TEXT REFERENCES baskets(name);
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM pg_constraint
+        WHERE conname = 'ck_derived_metric_has_scope'
+    ) THEN
+        ALTER TABLE derived_metrics
+            ADD CONSTRAINT ck_derived_metric_has_scope
+            CHECK (
+                instrument_id IS NOT NULL
+                OR series_id IS NOT NULL
+                OR basket_name IS NOT NULL
+            );
+    END IF;
+END $$;
+
+CREATE UNIQUE INDEX IF NOT EXISTS uq_derived_metric_scope
+    ON derived_metrics (
+        metric_id,
+        COALESCE(instrument_id, -1),
+        COALESCE(series_id, ''),
+        COALESCE(basket_name, ''),
+        date
+    );
 
 CREATE TABLE IF NOT EXISTS earnings_events (
     id                 BIGSERIAL PRIMARY KEY,
