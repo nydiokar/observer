@@ -2,8 +2,8 @@
 
 | Source | Status | Coverage | Access Type | Notes |
 |---|---|---|---|---|
-| FRED | Not started | Macro, rates, spreads, VIX, Fed balance sheet | Free API | Primary macro backbone |
-| ALFRED | Not started | Vintage/revision data for select FRED series | Free API | Point-in-time macro history |
+| FRED | Implemented | Macro, rates, spreads, VIX, Fed balance sheet | Free API key | Connector, raw archive, normalization, and DB upsert path are tested. Live backfill requires `FRED_API_KEY`. |
+| ALFRED | Implemented | Vintage/revision data for select FRED series | Free API key | Connector supports vintage rows via `--include-alfred-vintages`. Live use requires `FRED_API_KEY`. |
 | BLS | Not started | CPI, PPI, labor, CPI components | Free API | |
 | BEA | Not started | PCE, Core PCE, NIPA | Free API key | |
 | EIA | Not started | Crude inventories, energy | Free API | |

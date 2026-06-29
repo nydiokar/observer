@@ -26,7 +26,7 @@ make db-setup
 
 ## Not implemented yet
 
-ALFRED vintage ingestion and dashboards are not implemented yet.
+Dashboards are not implemented yet. Stage 3 live FRED/ALFRED ingestion requires `FRED_API_KEY`.
 
 ## Recovery
 
